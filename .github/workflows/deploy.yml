@@ -1,9 +1,10 @@
 name: Deploy Python App to EC2
 
 on:
-  push:
-    branches:
-      - main
+ # push:
+  #  branches:
+     # - main
+ workflow_dispatch:
 
 jobs:
   deploy:
@@ -23,10 +24,13 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/ubuntu/app || git clone https://github.com/ShubhamDeshmukh-0168/Gitlab_cicd.git/home/ubuntu/app
+
+
+          cd /home/ubuntu/app || git clone https://github.com/ShubhamDeshmukh-0168/Github_actions.git /home/ubuntu/app
+
           cd /home/ubuntu/app
           git pull origin main
           pip3 install -r requirements.txt
           pkill -f app.py || true
           nohup python3 app.py > output.log 2>&1 &
-        EOF
+        E
